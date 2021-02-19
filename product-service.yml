@@ -21,7 +21,7 @@ microservices:
     api-key-name: apikey
     api-key: ${apiKey:undefined}
   api-gateway:
-    scheme: http
+    scheme: https
     port: 8083
   servers:
     devopsusa-order-service:
