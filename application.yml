@@ -1,4 +1,43 @@
-server:
-  port: 8085
-  error:
-    include-message: always
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: env, health, info
+
+microservices:
+  spring-retry:
+    max-attempts: 3
+    delay-in-ms: 5000
+  client:
+    api-key-name: apikey
+    api-key: ${apiKey:undefined}
+  api-gateway:
+    scheme: http
+    port: 8083
+  servers:
+    devopsusa-order-service:
+      scheme: ${microservices.api-gateway.scheme}
+      host-name: ${microservices.api-gateway.host-name}
+      port: ${microservices.api-gateway.port}
+      context-root: /api
+      base-url: ${microservices.servers.devopsusa-order-service.scheme}://${micorservices.servers.devopsusa-order-service.host-name}:${micorservices.servers.devopsusa-order-service.port}${microservices.servers.devopsusa-order-service.context-root}
+---
+spring:
+  profiles: development
+
+microservices.api-gateway.host-name: localhost
+
+---
+spring:
+  profiles: release
+
+microservices.api-gateway.host-name: devopsusa-order-service.herokuapp.com
