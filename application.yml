@@ -4,15 +4,6 @@ feign:
       default:
         loggerLevel: full
 
-management:
-  endpoint:
-    health:
-      show-details: always
-  endpoints:
-    web:
-      exposure:
-        include: env, health, info
-
 microservices:
   spring-retry:
     max-attempts: 3
@@ -23,13 +14,6 @@ microservices:
   api-gateway:
     scheme: https
     port: 8083
-  servers:
-    devopsusa-order-service:
-      scheme: ${microservices.api-gateway.scheme}
-      host-name: ${microservices.api-gateway.host-name}
-      port: ${microservices.api-gateway.port}
-      context-root: /api
-      base-url: ${microservices.servers.devopsusa-order-service.port}://${microservices.servers.devopsusa-order-service.host-name}:${microservices.servers.devopsusa-order-service.port}${microservices.servers.devopsusa-order-service.context-root}
 ---
 spring.config.activate.on-profile: development
 microservices.api-gateway.host-name: localhost
