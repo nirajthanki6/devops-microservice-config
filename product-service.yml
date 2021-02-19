@@ -31,13 +31,9 @@ microservices:
       context-root: /api
       base-url: ${microservices.servers.devopsusa-order-service.scheme}://${microservices.servers.devopsusa-order-service.host-name}:${microservices.servers.devopsusa-order-service.port}${microservices.servers.devopsusa-order-service.context-root}
 ---
-spring:
-  profiles: development
-
+spring.config.activate.on-profile: development
 microservices.api-gateway.host-name: localhost
 
 ---
-spring:
-  profiles: release
-
+spring.config.activate.on-profile: release
 microservices.api-gateway.host-name: devopsusa-order-service.herokuapp.com
