@@ -1,23 +1,2 @@
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: full
-
-microservices:
-  spring-retry:
-    max-attempts: 3
-    delay-in-ms: 5000
-  client:
-    api-key-name: apikey
-    api-key: ${apiKey:undefined}
-  api-gateway:
-    scheme: https
-    port: 8083
----
-spring.config.activate.on-profile: development
-microservices.api-gateway.host-name: localhost
-
----
-spring.config.activate.on-profile: release
-microservices.api-gateway.host-name: devopsusa-order-service.herokuapp.com
+server:
+  port: 9999
