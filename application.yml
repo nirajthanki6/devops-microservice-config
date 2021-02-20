@@ -1,2 +1,2 @@
-server:
+image:
   port: 7777
