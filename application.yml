@@ -1,2 +1,35 @@
-image:
-  port: 7777
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
+
+management:
+  endpoint:
+    health:
+      show-details: always
+      
+microservices:
+  spring-retry:
+    max-attempts: 3
+    delay-in-ms: 5000
+  client:
+    api-key-name: apikey
+    api-key: ${apiKey:undefined}
+  api-gateway:
+    scheme: http
+    port: 8083
+  servers:
+    devopsusa-order-service:
+      scheme: ${microservices.api-gateway.scheme}
+      host-name: ${microservices.api-gateway.host-name}
+      port: ${microservices.api-gateway.port}
+      context-root: /api
+      base-url: ${microservices.servers.devopsusa-order-service.scheme}://${microservices.servers.devopsusa-order-service.host-name}:${microservices.servers.devopsusa-order-service.port}${microservices.servers.devopsusa-order-service.context-root}
+---
+spring.config.activate.on-profile: development
+microservices.api-gateway.host-name: localhost
+
+---
+spring.config.activate.on-profile: release
+microservices.api-gateway.host-name: devopsusa-order-service.herokuapp.com
