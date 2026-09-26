@@ -2,12 +2,14 @@ feign:
   client:
     config:
       default:
-        loggerLevel: full
+        # BASIC logs method, URL, status and timing only; FULL also logs headers,
+        # which would write the apikey header to the logs on every call.
+        loggerLevel: basic
 
 management:
   endpoint:
     health:
-      show-details: always
+      show-details: when-authorized
       
 microservices:
   spring-retry:
@@ -33,3 +35,6 @@ microservices.api-gateway.host-name: localhost
 ---
 spring.config.activate.on-profile: release
 microservices.api-gateway.host-name: devopsusa-order-service.herokuapp.com
+# Send the API key over TLS outside local development.
+microservices.api-gateway.scheme: https
+microservices.api-gateway.port: 443
